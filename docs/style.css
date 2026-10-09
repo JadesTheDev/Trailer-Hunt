@@ -7,3 +7,13 @@
 .source-group h3{font-size:.9rem;letter-spacing:.06em;color:#b6c7fa;margin:0 0 12px}
 .source-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(165px,1fr));gap:10px}
 @media(max-width:550px){.source-controls{grid-template-columns:1fr}}
+
+.dictionary-tools{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-top:24px;padding-top:18px;border-top:1px solid #35416b}
+.dictionary-status{color:#aebce2;font-size:.8rem;margin:14px 0}
+.dictionary-list{max-height:360px;overflow:auto;padding-right:5px}
+.dictionary-section{margin-bottom:18px}
+.dictionary-section h3{font-size:.88rem;color:#b6c7fa;margin:0 0 9px}
+.dictionary-chips{display:flex;flex-wrap:wrap;gap:7px}
+.dictionary-chip{border:1px solid #455780;border-radius:100px;background:#192541;color:#dce7ff;padding:8px 12px;font:inherit;font-size:.8rem;cursor:pointer}
+.dictionary-chip:hover,.dictionary-chip.selected{border-color:#8ecaff;background:#2c3765}
+@media(max-width:550px){.dictionary-tools{grid-template-columns:1fr}}
