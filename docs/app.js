@@ -48,3 +48,35 @@ function renderSources(){
 $('source-query').addEventListener('change',renderSources);
 $('source-region').addEventListener('change',renderSources);
 renderSources();
+
+let searchDictionary={};
+function renderDictionary(){
+ const target=$('dictionary-list'),filter=$('term-filter').value.trim().toLowerCase(),category=$('term-category').value;
+ target.replaceChildren();let count=0;
+ for(const [name,terms] of Object.entries(searchDictionary)){
+  if(category&&name!==category)continue;
+  const matches=terms.filter(term=>term.toLowerCase().includes(filter));
+  if(!matches.length)continue;
+  const section=document.createElement('section');section.className='dictionary-section';
+  const heading=document.createElement('h3');heading.textContent=name+' ('+matches.length+')';section.append(heading);
+  const grid=document.createElement('div');grid.className='dictionary-chips';
+  for(const term of matches){
+   const button=document.createElement('button');button.type='button';button.className='dictionary-chip';button.textContent=term;
+   if($('source-query').value===term)button.classList.add('selected');
+   button.onclick=()=>{let option=[...$('source-query').options].find(x=>x.value===term);if(!option){option=document.createElement('option');option.value=term;option.textContent=term;$('source-query').add(option)}$('source-query').value=term;renderSources();renderDictionary()};
+   grid.append(button);
+  }section.append(grid);target.append(section);count+=matches.length;
+ }
+ $('dictionary-status').textContent=count+' search phrases · Click any phrase to search across all hunting grounds';
+ if(!count){const msg=document.createElement('p');msg.textContent='No matching phrases. Try a broader word.';target.append(msg)}
+}
+async function loadDictionary(){
+ try{const response=await fetch('search_dictionary.json',{cache:'no-store'});if(!response.ok)throw Error('Could not load dictionary');
+ const data=await response.json();searchDictionary=data.categories||{};
+ for(const name of Object.keys(searchDictionary)){const option=document.createElement('option');option.value=name;option.textContent=name;$('term-category').append(option)}
+ renderDictionary();
+ }catch(err){$('dictionary-status').textContent='Search dictionary unavailable: '+err.message}
+}
+$('term-filter').addEventListener('input',renderDictionary);
+$('term-category').addEventListener('change',renderDictionary);
+loadDictionary();
