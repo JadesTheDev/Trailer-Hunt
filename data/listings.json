@@ -5,7 +5,7 @@
     "location": "RENOWN CARGO TRAILERS",
     "url": "https://www.craigslist.org/view/d/douglas-polycore-enclosed-cargo/4tJbxDGhyuDVzRL8k4obvM",
     "city": "savannah",
-    "last_seen": "2026-10-14T04:56:13.818298+00:00",
+    "last_seen": "2026-10-14T11:54:55.646885+00:00",
     "first_seen": "2026-10-09T16:30:19.389829+00:00"
   },
   {
@@ -14,7 +14,7 @@
     "location": "RENOWN CARGO TRAILERS",
     "url": "https://www.craigslist.org/view/d/douglas-polycore-enclosed-cargo/xvYRFoQXPQx5qThCFy6e2V",
     "city": "augusta",
-    "last_seen": "2026-10-14T04:56:03.074876+00:00",
+    "last_seen": "2026-10-14T11:54:43.666935+00:00",
     "first_seen": "2026-10-09T16:30:08.187185+00:00"
   },
   {
@@ -23,8 +23,17 @@
     "location": "RENOWN CARGO TRAILERS",
     "url": "https://www.craigslist.org/view/d/douglas-polycore-enclosed-cargo/uVH3pjNxhJ6rekzoFUNBRH",
     "city": "myrtlebeach",
-    "last_seen": "2026-10-14T04:55:52.347731+00:00",
+    "last_seen": "2026-10-14T11:54:31.579528+00:00",
     "first_seen": "2026-10-09T16:29:56.921837+00:00"
+  },
+  {
+    "title": "Merchandiser Glass Door Refrigerator / Freezer / Wine Cooler",
+    "price": 495,
+    "location": "100% Brand New",
+    "url": "https://www.craigslist.org/view/d/la-puente-merchandiser-glass-door/hb1dRAQnW61eTyMLvrg5CW",
+    "city": "myrtlebeach",
+    "last_seen": "2026-10-14T11:54:31.579528+00:00",
+    "first_seen": "2026-10-09T16:47:24.814079+00:00"
   },
   {
     "title": "Food Trailers for Sale",
@@ -32,7 +41,7 @@
     "location": "San Antonio Tx",
     "url": "https://www.craigslist.org/view/d/san-antonio-food-trailers-for-sale/rbK58fqSbvGGGS94fuQvLB",
     "city": "myrtlebeach",
-    "last_seen": "2026-10-14T04:55:48.031686+00:00",
+    "last_seen": "2026-10-14T11:54:26.798631+00:00",
     "first_seen": "2026-10-09T16:29:52.505993+00:00"
   },
   {
@@ -41,8 +50,26 @@
     "location": "RENOWN CARGO TRAILERS",
     "url": "https://www.craigslist.org/view/d/douglas-polycore-enclosed-cargo/eM7y4jnVeTYNCwsJwAAZ41",
     "city": "columbia",
-    "last_seen": "2026-10-14T04:55:30.453542+00:00",
+    "last_seen": "2026-10-14T11:54:07.206965+00:00",
     "first_seen": "2026-10-09T16:29:34.613593+00:00"
+  },
+  {
+    "title": "POLYCORE Enclosed Cargo Trailers IN STOCK - On Sale! 888-287-3954",
+    "price": 1,
+    "location": "RENOWN CARGO TRAILERS",
+    "url": "https://www.craigslist.org/view/d/douglas-polycore-enclosed-cargo/74JLACgbnmD1amxq6qoMXN",
+    "city": "charleston",
+    "last_seen": "2026-10-14T11:53:54.793198+00:00",
+    "first_seen": "2026-10-09T16:29:22.670536+00:00"
+  },
+  {
+    "title": "Exhaust Hood Fan Makeup Air",
+    "price": 795,
+    "location": "100% NEW",
+    "url": "https://www.craigslist.org/view/d/hollywood-exhaust-hood-fan-makeup-air/3VL2EJqwH8JBUTVNugA3zH",
+    "city": "charleston",
+    "last_seen": "2026-10-14T11:53:54.793198+00:00",
+    "first_seen": "2026-10-09T16:46:50.284471+00:00"
   },
   {
     "title": "Exhaust Hood Fan Makeup Air",
@@ -54,24 +81,6 @@
     "first_seen": "2026-10-09T16:47:01.734863+00:00"
   },
   {
-    "title": "POLYCORE Enclosed Cargo Trailers IN STOCK - On Sale! 888-287-3954",
-    "price": 1,
-    "location": "RENOWN CARGO TRAILERS",
-    "url": "https://www.craigslist.org/view/d/douglas-polycore-enclosed-cargo/74JLACgbnmD1amxq6qoMXN",
-    "city": "charleston",
-    "last_seen": "2026-10-14T04:55:19.029191+00:00",
-    "first_seen": "2026-10-09T16:29:22.670536+00:00"
-  },
-  {
-    "title": "Merchandiser Glass Door Refrigerator / Freezer / Wine Cooler",
-    "price": 495,
-    "location": "100% Brand New",
-    "url": "https://www.craigslist.org/view/d/la-puente-merchandiser-glass-door/hb1dRAQnW61eTyMLvrg5CW",
-    "city": "myrtlebeach",
-    "last_seen": "2026-10-13T14:13:42.209394+00:00",
-    "first_seen": "2026-10-09T16:47:24.814079+00:00"
-  },
-  {
     "title": "Merchandiser Glass Door Refrigerator / Freezer / Wine Cooler",
     "price": 495,
     "location": "100% Brand New",
@@ -79,14 +88,5 @@
     "city": "columbia",
     "last_seen": "2026-10-13T00:41:11.411304+00:00",
     "first_seen": "2026-10-09T22:39:35.635170+00:00"
-  },
-  {
-    "title": "Exhaust Hood Fan Makeup Air",
-    "price": 795,
-    "location": "100% NEW",
-    "url": "https://www.craigslist.org/view/d/hollywood-exhaust-hood-fan-makeup-air/3VL2EJqwH8JBUTVNugA3zH",
-    "city": "charleston",
-    "last_seen": "2026-10-09T16:46:50.284471+00:00",
-    "first_seen": "2026-10-09T16:46:50.284471+00:00"
   }
 ]
