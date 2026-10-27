@@ -17,3 +17,17 @@
 .dictionary-chip{border:1px solid #455780;border-radius:100px;background:#192541;color:#dce7ff;padding:8px 12px;font:inherit;font-size:.8rem;cursor:pointer}
 .dictionary-chip:hover,.dictionary-chip.selected{border-color:#8ecaff;background:#2c3765}
 @media(max-width:550px){.dictionary-tools{grid-template-columns:1fr}}
+
+/* Compact listings-first layout and dimensions controls */
+.toolbar{grid-template-columns:2fr 1fr 1fr 1fr}
+.custom-size{grid-column:span 2;display:grid;grid-template-columns:1fr 1fr;gap:12px}
+.custom-size[hidden]{display:none}
+.source-hub{margin-top:30px}
+.source-summary{display:flex;align-items:center;justify-content:space-between;gap:16px;cursor:pointer;list-style:none}
+.source-summary::-webkit-details-marker{display:none}
+.source-summary strong{display:block;font-size:1.25rem;margin-top:7px}
+.source-chevron{font-size:1.6rem;color:#a5b7ff;transition:transform .2s}
+.source-hub[open] .source-chevron{transform:rotate(180deg)}
+.source-content{padding-top:18px}
+@media(max-width:760px){.toolbar{grid-template-columns:1fr 1fr}.custom-size{grid-column:1/-1}}
+@media(max-width:420px){.toolbar{grid-template-columns:1fr}.custom-size{grid-column:1/-1}}
