@@ -1,5 +1,7 @@
 """Collect public Craigslist search listings. Extraction is not yet live-verified."""
 import json
+import os
+import base64
 import re
 import time
 from datetime import datetime, timezone
@@ -55,6 +57,53 @@ def parse_page(html, base):
             results.append({"title": title, "price": price, "location": location, "url": url})
     return results
 
+
+def collect_ebay():
+    """Use eBay's official Browse API when application credentials are configured."""
+    client_id = os.environ.get("EBAY_CLIENT_ID", "")
+    client_secret = os.environ.get("EBAY_CLIENT_SECRET", "")
+    if not client_id or not client_secret:
+        print("eBay: awaiting EBAY_CLIENT_ID and EBAY_CLIENT_SECRET secrets; skipped.")
+        return []
+    try:
+        auth = base64.b64encode(f"{client_id}:{client_secret}".encode()).decode()
+        token_response = requests.post(
+            "https://api.ebay.com/identity/v1/oauth2/token",
+            headers={"Authorization": f"Basic {auth}", "Content-Type": "application/x-www-form-urlencoded"},
+            data={"grant_type": "client_credentials", "scope": "https://api.ebay.com/oauth/api_scope"},
+            timeout=20,
+        )
+        token_response.raise_for_status()
+        token = token_response.json()["access_token"]
+        headers = {"Authorization": f"Bearer {token}", "X-EBAY-C-MARKETPLACE-ID": "EBAY_US"}
+        found = {}
+        for term in ["utility trailer", "flatbed trailer", "car hauler trailer", "trailer chassis"]:
+            response = requests.get(
+                "https://api.ebay.com/buy/browse/v1/item_summary/search",
+                headers=headers,
+                params={"q": term, "limit": 50, "filter": "price:[50..1500],priceCurrency:USD"},
+                timeout=25,
+            )
+            response.raise_for_status()
+            for item in response.json().get("itemSummaries", []):
+                title = item.get("title", "")
+                url = item.get("itemWebUrl", "")
+                price_data = item.get("price", {})
+                try:
+                    price = float(price_data.get("value", "nan"))
+                except (TypeError, ValueError):
+                    continue
+                if not (is_trailer_listing(title) and url.startswith("https://www.ebay.com/") and 50 <= price <= MAX_PRICE):
+                    continue
+                place = item.get("itemLocation") or {}
+                found[url] = {"title": title, "price": price, "location": ", ".join(filter(None, [place.get("city"), place.get("stateOrProvince")])), "city": place.get("stateOrProvince", ""), "url": url, "source": "eBay"}
+            time.sleep(1)
+        print(f"eBay: {len(found)} matching listings.")
+        return list(found.values())
+    except (requests.RequestException, KeyError, ValueError) as exc:
+        print(f"eBay collection unavailable: {exc}")
+        return []
+
 def main():
     old = {}
     if DATA.exists():
@@ -78,12 +127,19 @@ def main():
                     item["city"] = city
                     item["last_seen"] = now
                     item["first_seen"] = old.get(item["url"], {}).get("first_seen", now)
+                    item["source"] = "Craigslist"
                     old[item["url"]] = item
                 extracted += len(found)
             except requests.RequestException as exc:
                 failures += 1
                 print(f"Request failed: {city} / {term}: {exc}")
             time.sleep(2)
+    for item in collect_ebay():
+        now = datetime.now(timezone.utc).isoformat()
+        item["last_seen"] = now
+        item["first_seen"] = old.get(item["url"], {}).get("first_seen", now)
+        old[item["url"]] = item
+        extracted += 1
     if extracted == 0:
         print(f"No new listings extracted ({failures} request errors). Retaining previously verified trailer listings.")
         if not old:
