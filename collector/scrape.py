@@ -19,6 +19,21 @@ def parse_price(value):
     match = re.search(r"\$?\s*([\d,]+)", str(value or ""))
     return int(match.group(1).replace(",", "")) if match else None
 
+def is_trailer_listing(title):
+    """Require the advertised item itself to be a trailer or usable chassis."""
+    text = str(title or "").lower()
+    relevant = re.search(
+        r"\b(trailers?|flat[ -]?beds?|car[ -]?haulers?|equipment[ -]?haulers?|"
+        r"auto[ -]?transporters?|tow[ -]?doll(?:y|ies)|chassis|utility[ -]?haulers?|"
+        r"hay[ -]?wagons?|camper[ -]?frames?|rv[ -]?frames?)\b", text
+    )
+    accessory = re.search(
+        r"\btrailer (?:hitch|lights?|tires?|wheels?|axles?|parts?|brakes?|jack|"
+        r"ramps?|fenders?|couplers?|locks?|wiring|accessories|park|home|rental|"
+        r"repair|service)\b", text
+    )
+    return bool(relevant) and not bool(accessory)
+
 def parse_page(html, base):
     soup = BeautifulSoup(html, "html.parser")
     results = []
@@ -36,7 +51,7 @@ def parse_page(html, base):
         price = parse_price(price_node.get_text(" ", strip=True) if price_node else "")
         location_node = node.select_one(".location, .result-hood")
         location = location_node.get_text(" ", strip=True) if location_node else ""
-        if title and price is not None and price <= MAX_PRICE:
+        if title and is_trailer_listing(title) and price is not None and price <= MAX_PRICE:
             results.append({"title": title, "price": price, "location": location, "url": url})
     return results
 
@@ -44,7 +59,7 @@ def main():
     old = {}
     if DATA.exists():
         try:
-            old = {item["url"]: item for item in json.loads(DATA.read_text(encoding="utf-8")) if item.get("url")}
+            old = {item["url"]: item for item in json.loads(DATA.read_text(encoding="utf-8")) if item.get("url") and is_trailer_listing(item.get("title"))}
         except (ValueError, TypeError, KeyError):
             print("Invalid existing data: stopping without overwriting it.")
             return
@@ -70,8 +85,9 @@ def main():
                 print(f"Request failed: {city} / {term}: {exc}")
             time.sleep(2)
     if extracted == 0:
-        print(f"No listings extracted ({failures} request errors). Keeping previous data; check access and HTML.")
-        return
+        print(f"No new listings extracted ({failures} request errors). Retaining previously verified trailer listings.")
+        if not old:
+            return
     payload = json.dumps(sorted(old.values(), key=lambda x: x["last_seen"], reverse=True), indent=2) + "\n"
     DATA.parent.mkdir(parents=True, exist_ok=True)
     DATA.write_text(payload, encoding="utf-8")
